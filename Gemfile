@@ -22,6 +22,7 @@ group :development do
   gem 'spring'
   gem 'guard'
   gem 'guard-livereload', require: false
+  gem 'letter_opener'
 
 end
 

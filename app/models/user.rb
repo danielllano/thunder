@@ -1,3 +1,4 @@
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -5,6 +6,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :likes
+
+  after_create :send_confirmation_email
 
   # A random user I haven't like or unlike yet
   def random_friend
@@ -15,4 +18,11 @@ class User < ActiveRecord::Base
   def liked?(user)
     likes.find_by_friend_id(user.id)
   end
+
+  protected
+
+    def send_confirmation_email
+      UserMailer.welcome_email(self).deliver
+    end
+
 end
